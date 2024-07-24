@@ -73,3 +73,4 @@ For inquiries or contributions, please contact [Tetteh Christopher Angmortey] at
 
 Thank you for being part of "Anansi's Legacy: Bridging Folklore with Modern Ghanaian Childhoods." Together, we can preserve and celebrate the rich heritage of Anansi stories for future generations.
 
+![FireSide App Anansi's Legacy Stories](Screens.png)
