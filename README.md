@@ -1,5 +1,6 @@
 # FireSide
 Anansi's Legacy: Bridging Folklore with Modern Ghanaian Childhoods
+
 Project Overview
 Welcome to "Anansi's Legacy: Bridging Folklore with Modern Ghanaian Childhoods," a captivating project dedicated to rekindling the rich heritage of Anansi stories. This project serves as a repository of timeless tales, weaving the wisdom, creativity, and cunning of Anansi into the fabric of modern Ghanaian childhoods. The collection is designed to preserve, celebrate, and share the cultural significance of Anansi folktales with a global audience, fostering a connection between past traditions and contemporary narratives.
 
