@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#2C2C2C',
     paddingVertical: hp(2),
     borderRadius: 30,
-    marginBottom: hp(4),
+    marginBottom: hp(2),
   },
   googleLogo: {
     width: wp(6),
