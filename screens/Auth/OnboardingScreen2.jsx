@@ -84,15 +84,15 @@ const styles = StyleSheet.create({
     marginHorizontal: wp(3),
   },
   activeDot: {
-    backgroundColor: '#FFA500',
+    backgroundColor: colors.primary,
   },
   button: {
     backgroundColor: colors.primary,
     paddingVertical: hp(2),
-    paddingHorizontal: wp(35),
+    paddingHorizontal: wp(40),
     borderRadius: 30,
     alignItems: 'center',
-    marginBottom: hp(2),
+    marginBottom: hp(4),
   },
   buttonText: {
     color: colors.background,
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     borderColor: colors.primary,
     borderWidth: 2,
     paddingVertical: hp(2),
-    paddingHorizontal: wp(35),
+    paddingHorizontal: wp(40),
     borderRadius: 30,
     alignItems: 'center',
   },
