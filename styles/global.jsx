@@ -5,10 +5,10 @@ export const colors = {
   primary: '#FF9900',
   secondary: '#ff7043',
   background: '#FEFEFD',
-  textPrimary: '#000',
+  textPrimary: '#FEFEFD',
   textSecondary: '#757575',
   gray: '#e0e0e0',
-  darkBase:'#0D131C',
+  darkBase:'#0A0A0A',
 
 };
 
