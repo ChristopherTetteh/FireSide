@@ -8,10 +8,11 @@ import homeIcon from '../assets/images/home.png'
 import bookmarkIcon from '../assets/images/bookmark.png'
 import playIcon from '../assets/images/PlayIcon.png'
 import starIcon from '../assets/images/starSingle.png'
-
+import googleIcon from '../assets/images/google.png'
 const icons = {
     eyeHide,
     eyeIcon,
+    googleIcon,
     userIcon,
     profileIcon,
     searchIcon,

@@ -1,32 +1,64 @@
-import { View, Text,TouchableOpacity } from 'react-native'
-import React from 'react'
-import {colors,borderRadii,fontSizes,fontWeights} from '../styles/globalStyles'
-const CustomButton = ({title,handlePress,containerStyles,textStyles,isLoading}) => {
+import { TouchableOpacity, Text, StyleSheet, Image } from 'react-native';
+import React from 'react';
+import { colors, borderRadii, fontSizes } from '../styles/globalStyles';
+
+const CustomButton = ({
+  title,
+  handlePress,
+  containerStyles,
+  textStyles,
+  isLoading,
+  icon,
+  iconStyles,
+  iconPosition = 'left',
+  backgroundColor = colors.primary
+}) => {
   return (
-    <TouchableOpacity 
-    onPress={handlePress}
-    activeOpacity={0.7}
-    style={{backgroundColor:colors.primary, 
-    borderRadius:borderRadii.large,
-    minHeight:62,
-    justifyContent:'center',
-    alignItems:'center',
-    ...containerStyles,
-    opacity: isLoading ? "0.5" : "1"
-
-    }}
-    disabled={isLoading}
+    <TouchableOpacity
+      onPress={handlePress}
+      activeOpacity={0.7}
+      style={{
+        backgroundColor: backgroundColor,
+        borderRadius: borderRadii.large,
+        minHeight: 62,
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: icon ? 'row' : 'column',
+        ...containerStyles,
+        opacity: isLoading ? 0.5 : 1
+      }}
+      disabled={isLoading}
     >
-
+      {icon && iconPosition === 'left' && (
+        <Image
+          source={icon}
+          style={[styles.icon, iconStyles]}
+        />
+      )}
       <Text style={{
-        color:colors.textBalck,
-        fontWeight:600, 
-        fontSize:fontSizes.large,
+        color: 'black',
+        fontWeight: '500',
+        fontSize: fontSizes.large,
         ...textStyles
-        }}>{title}</Text>
+      }}>
+        {title}
+      </Text>
+      {icon && iconPosition === 'right' && (
+        <Image
+          source={icon}
+          style={[styles.icon, iconStyles]}
+        />
+      )}
     </TouchableOpacity>
-   
-  )
+  );
 }
 
-export default CustomButton
+const styles = StyleSheet.create({
+  icon: {
+    width: 24,
+    height: 24,
+    marginHorizontal: 12,
+  },
+});
+
+export default CustomButton;

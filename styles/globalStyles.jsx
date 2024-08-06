@@ -6,16 +6,6 @@ export const colors = {
     textBalck:'#0A0A0A',
     textSecondary: '#757575',
   };
-  export const fontWeights = {
-    light: 200,
-    extraLight: 250,
-    regular: 300,
-    large: 400,
-    extraLarge: 500,
-    semiBold: 600,
-    bold: 700,
-    extraBold: 800,
-  };
   export const borderRadii = {
     small: 10,
     medium: 20,
