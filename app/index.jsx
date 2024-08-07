@@ -78,7 +78,7 @@ const styles=StyleSheet.create({
   },
   title: {
     fontSize: wp(8),
-    color: colors.secondary, // gold color
+    color: colors.secondary, 
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: hp(2),

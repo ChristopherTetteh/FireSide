@@ -5,19 +5,19 @@ import { borderRadii, colors, fontSizes } from '../styles/globalStyles';
 
 const FormField = ({
   title, value, placeholder,
-  handleChangeText, otherStyles,
-  ...props
+  handleChangeText, error, otherStyles,
+  secureTextEntry, ...props
 }) => {
   const [showPassword, setShowPassword] = useState(false);
-  const[isFocused,setIsFocused]=useState(false)
+  const [isFocused, setIsFocused] = useState(false);
 
   return (
     <View style={{ gap: 8, ...otherStyles }}>
       <Text
         style={{
           color: colors.secondary,
-          fontWeight: '400',
-          fontSize: fontSizes.large,
+          fontWeight: '500',
+          fontSize: fontSizes.medium,
         }}
       >
         {title}
@@ -29,7 +29,8 @@ const FormField = ({
         borderRadius: borderRadii.small,
         backgroundColor: colors.tertairy,
         borderWidth: 1,
-        borderColor: isFocused ? colors.primary : colors.secondary,        flexDirection: 'row',
+        borderColor: isFocused ? colors.primary : colors.secondary,
+        flexDirection: 'row',
         alignItems: 'center'
       }}>
         <TextInput
@@ -41,14 +42,14 @@ const FormField = ({
           }}
           value={value}
           placeholder={placeholder}
-          placeholderTextColor="#FF9900"
+          placeholderTextColor='#777'
           onChangeText={handleChangeText}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
-          secureTextEntry={title === 'Password' && !showPassword}
+          secureTextEntry={secureTextEntry && !showPassword}
           {...props}
         />
-        {title === 'Password' && (
+        {secureTextEntry && (
           <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
             <Image
               style={{ width: 24, height: 24 }}
@@ -58,8 +59,11 @@ const FormField = ({
           </TouchableOpacity>
         )}
       </View>
+      {error && (
+        <Text style={{ color: 'red', fontSize: fontSizes.small }}>{error}</Text>
+      )}
     </View>
   );
 };
 
-export default FormField
+export default FormField;
