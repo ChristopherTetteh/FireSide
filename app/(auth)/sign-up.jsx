@@ -24,8 +24,8 @@ return (
   <SafeAreaView style={styles.body}>
   <ScrollView>
   <View style={styles.container}>
-    <Text style={styles.title}>Welcome Back</Text>
-    <Text style={styles.subtitle}>Sign in to read stories of Kweku Ananse</Text>
+    <Text style={styles.title}>Create An Account</Text>
+    <Text style={styles.subtitle}>Sign up to read stories of Kweku Ananse</Text>
 
     <Formik
       initialValues={{ email: '', password: '' }}
@@ -58,18 +58,13 @@ return (
             secureTextEntry
             />
           <CustomButton
-            title='Sign In'
+            title='Sign Up'
             handlePress={handleSubmit}
             containerStyles={{ marginTop: 50 }}
             />
         </>
       )}
     </Formik>
-
-    <Pressable onPress={() => router.push('forget-password')}>
-      <Text style={styles.forgotPassword}>Forgot password?</Text>
-    </Pressable>
-
     <View style={styles.orContainer}>
       <View style={styles.line} />
       <Text style={styles.orText}>or</Text>
@@ -77,7 +72,7 @@ return (
     </View>
 
     <CustomButton
-      title="Sign in with Google"
+      title="Sign up with Google"
       handlePress={() => console.log('Google Sign In pressed')}
       containerStyles={{ width: "100%", marginTop: 10 }}
       backgroundColor="#555555"
@@ -86,9 +81,9 @@ return (
       textStyles={{ color: colors.textWhite }}
       />
 
-    <Pressable onPress={() => router.push('/onboardingScreen1')}>
+    <Pressable onPress={() => router.push('/sign-in')}>
       <Text style={styles.signUpText}>
-        Don't have an account? <Text style={styles.signUpLink}>Sign Up</Text>
+        Already have an account? <Text style={styles.signUpLink}>Sign In</Text>
       </Text>
     </Pressable>
       
@@ -99,5 +94,63 @@ return (
   </GestureHandlerRootView>
   )
 }
+
+
+const styles = StyleSheet.create({
+  body:{
+    flex:1,
+    width:'100%'
+  },
+  container: {
+    width: '100%',
+    flex: 1,
+    paddingHorizontal: wp(6),
+    paddingVertical: hp(10),
+    backgroundColor: colors.tertairy,
+  },
+  title: {
+    fontSize: wp(7),
+    fontWeight: 'bold',
+    color: colors.textWhite,
+    textAlign: 'left',
+    marginBottom: hp(3),
+  },
+  subtitle: {
+    fontSize: wp(3.2),
+    color: colors.textWhite,
+    textAlign: 'left',
+    marginBottom: hp(2),
+  },
+  orContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: hp(4),
+  },
+  line: {
+    flex: 1,
+    height: 1,
+    backgroundColor: '#999999',
+  },
+  orText: {
+    marginHorizontal: wp(2),
+    color: '#999999',
+    fontSize: wp(4),
+  },
+  forgotPassword: {
+    color: colors.primary,
+    fontSize: wp(3),
+    textAlign: 'right',
+    marginVertical: hp(2.5),
+  },
+  signUpText: {
+    color: '#777',
+    fontSize: wp(4),
+    textAlign: 'center',
+    paddingVertical: hp(8),
+  },
+  signUpLink: {
+    color: colors.primary,
+  },
+});
 
 export default SignUp
