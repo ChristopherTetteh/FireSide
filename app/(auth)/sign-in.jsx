@@ -87,7 +87,7 @@ const SignIn = ({ navigation }) => {
         textStyles={{ color: colors.textWhite }}
         />
 
-      <Pressable onPress={() => router.push('/sign-up')}>
+      <Pressable onPress={() => router.push('/onboardingScreen1')}>
         <Text style={styles.signUpText}>
           Don't have an account? <Text style={styles.signUpLink}>Sign Up</Text>
         </Text>
