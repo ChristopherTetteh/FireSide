@@ -112,7 +112,7 @@ const SignUp = ({ navigation }) => {
                   <CustomButton
                     title='Sign Up'
                     handlePress={handleSubmit}
-                    containerStyles={{ marginTop: 40 }}
+                    containerStyles={{ marginTop: 35 }}
                   />
                 </>
               )}
@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
     width: '100%',
     flex: 1,
     paddingHorizontal: wp(6),
-    paddingVertical: hp(8),
+    paddingVertical: hp(7),
     backgroundColor: colors.tertairy,
   },
   title: {
@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: hp(2),
-    marginTop: hp(4),
+    marginTop: hp(3),
   },
   line: {
     flex: 1,
@@ -192,17 +192,11 @@ const styles = StyleSheet.create({
     color: '#999999',
     fontSize: wp(4),
   },
-  forgotPassword: {
-    color: colors.primary,
-    fontSize: wp(3),
-    textAlign: 'right',
-    marginVertical: hp(2.5),
-  },
   signUpText: {
     color: '#777',
     fontSize: wp(4),
     textAlign: 'center',
-    paddingVertical: hp(4),
+    paddingVertical: hp(3),
   },
   signUpLink: {
     color: colors.primary,

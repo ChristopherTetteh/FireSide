@@ -1,11 +1,11 @@
-import React from 'react'
-import { View } from 'react-native';
-import { Slot } from 'expo-router'
+import React, { useEffect } from 'react';
+import { View, ActivityIndicator, StyleSheet } from 'react-native';
+import { Slot } from 'expo-router';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
 
-SplashScreen.preventAutoHideAsync()
+SplashScreen.preventAutoHideAsync();
+
 const RootLayout = () => {
   const [fontsLoaded, error] = useFonts({
     'Poppins-Thin': require('../assets/fonts/Poppins-Thin.ttf'),
@@ -24,9 +24,23 @@ const RootLayout = () => {
   }, [fontsLoaded, error]);
 
   if (!fontsLoaded && !error) {
-    return <View style={{ flex: 1, backgroundColor: 'white' }} />;
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#FF9900" />
+      </View>
+    );
   }
 
   return <Slot />;
 };
-export default RootLayout
+
+const styles = StyleSheet.create({
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
+  },
+});
+
+export default RootLayout;

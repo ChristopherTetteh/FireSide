@@ -1,12 +1,13 @@
 import { View, Text, StyleSheet, Pressable, SafeAreaView } from 'react-native';
-import React from 'react';
-import { router } from 'expo-router';
+import React,{useState} from 'react';
+import { router,Link } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { wp, hp } from '../../utils/responsive';
 import { icons } from '../../constants';
 import { colors } from '../../styles/globalStyles';
 import FormField from '../../components/FormField';
 import CustomButton from '../../components/CustomButton';
+
 import { GestureHandlerRootView,ScrollView } from 'react-native-gesture-handler';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
@@ -19,7 +20,7 @@ const SignIn = ({ navigation }) => {
       .matches(/\d/, 'Password must contain at least one number')
       .required('Password is required'),
   });
-
+const  [isSubmitting,setIsSubmitting]=useState(false)
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
     <SafeAreaView style={styles.body}>
@@ -66,10 +67,9 @@ const SignIn = ({ navigation }) => {
           </>
         )}
       </Formik>
-
-      <Pressable onPress={() => router.push('forget-password')}>
-        <Text style={styles.forgotPassword}>Forgot password?</Text>
-      </Pressable>
+      <View>
+        <Link style={styles.forgotPassword} href='/forget-password'>Forgot Password</Link>
+      </View>
 
       <View style={styles.orContainer}>
         <View style={styles.line} />
@@ -85,13 +85,15 @@ const SignIn = ({ navigation }) => {
         icon={icons.googleIcon}
         iconStyles={{ width: 25, height: 25 }}
         textStyles={{ color: colors.textWhite }}
+        isLoading={isSubmitting}
         />
-
-      <Pressable onPress={() => router.push('/onboardingScreen1')}>
-        <Text style={styles.signUpText}>
-          Don't have an account? <Text style={styles.signUpLink}>Sign Up</Text>
+{/* 
+      {/* Link to other pages */}
+      <View>
+        <Text style={styles.signUpText}>  Don't have an account?
+        <Link style={styles.signUpLink} href='/onboardingScreen1'>Sign Up</Link>
         </Text>
-      </Pressable>
+      </View>
         
         </View>
         </ScrollView>
@@ -153,10 +155,11 @@ const styles = StyleSheet.create({
     color: '#777',
     fontSize: wp(4),
     textAlign: 'center',
-    paddingVertical: hp(8),
+    paddingVertical: hp(5),
   },
   signUpLink: {
     color: colors.primary,
+    
   },
 });
 
