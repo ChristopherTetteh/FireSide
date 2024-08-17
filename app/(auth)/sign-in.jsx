@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Pressable, SafeAreaView } from 'react-native';
+import { View, Text, StyleSheet, Pressable, SafeAreaView,ActivityIndicator ,Alert} from 'react-native';
 import React,{useState} from 'react';
 import { router,Link } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
@@ -7,10 +7,11 @@ import { icons } from '../../constants';
 import { colors } from '../../styles/globalStyles';
 import FormField from '../../components/FormField';
 import CustomButton from '../../components/CustomButton';
-
 import { GestureHandlerRootView,ScrollView } from 'react-native-gesture-handler';
 import { Formik } from 'formik';
+import { signIn } from '../../lib/appwriteConfig';
 import * as Yup from 'yup';
+
 const SignIn = ({ navigation }) => {
   const SignInSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Email is required'),
@@ -21,6 +22,21 @@ const SignIn = ({ navigation }) => {
       .required('Password is required'),
   });
 const  [isSubmitting,setIsSubmitting]=useState(false)
+const handleSignIn = async (values) => {
+  setIsSubmitting(true)
+  try {
+    const result= await signIn(values.email,values.password)
+
+    // set it to global state
+    router.replace('/home')
+  } catch (error) {
+    Alert.alert('Error',error.message)
+  }finally{
+    setIsSubmitting(false)
+  }
+ 
+
+};
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
     <SafeAreaView style={styles.body}>
@@ -32,10 +48,7 @@ const  [isSubmitting,setIsSubmitting]=useState(false)
       <Formik
         initialValues={{ email: '', password: '' }}
         validationSchema={SignInSchema}
-        onSubmit={(values) => {
-          // Handle sign in logic
-          console.log(values);
-        }}
+        onSubmit={handleSignIn}
         >
         {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
           <>
@@ -63,8 +76,18 @@ const  [isSubmitting,setIsSubmitting]=useState(false)
               title='Sign In'
               handlePress={handleSubmit}
               containerStyles={{ marginTop: 50 }}
+              isLoading={isSubmitting} 
               />
+              {/* Loading Animation */}
+          {isSubmitting && (
+            <View style={styles.loadingContainer}>
+              <ActivityIndicator size="large" color={colors.primary} /> 
+              <Text style={styles.loadingText}>Signing in...</Text>
+            </View>
+          )}
+
           </>
+          
         )}
       </Formik>
       <View>
@@ -77,7 +100,7 @@ const  [isSubmitting,setIsSubmitting]=useState(false)
         <View style={styles.line} />
       </View>
 
-      <CustomButton
+      {/* <CustomButton
         title="Sign in with Google"
         handlePress={() => console.log('Google Sign In pressed')}
         containerStyles={{ width: "100%", marginTop: 10 }}
@@ -86,7 +109,7 @@ const  [isSubmitting,setIsSubmitting]=useState(false)
         iconStyles={{ width: 25, height: 25 }}
         textStyles={{ color: colors.textWhite }}
         isLoading={isSubmitting}
-        />
+        /> */}
 {/* 
       {/* Link to other pages */}
       <View>
@@ -113,7 +136,7 @@ const styles = StyleSheet.create({
     width: '100%',
     flex: 1,
     paddingHorizontal: wp(6),
-    paddingVertical: hp(9),
+    paddingVertical: hp(12),
     backgroundColor: colors.tertairy,
   },
   title: {
@@ -160,6 +183,15 @@ const styles = StyleSheet.create({
   signUpLink: {
     color: colors.primary,
     
+  },
+  loadingContainer: {
+    marginTop: 20,
+    alignItems: 'center',
+  },
+  loadingText: {
+    marginTop: 10,
+    color: colors.primary, // Or any color you prefer
+    fontSize: wp(4),
   },
 });
 

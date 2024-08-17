@@ -1,5 +1,5 @@
-import { View, Text, StyleSheet, Pressable, SafeAreaView } from 'react-native';
-import React from 'react';
+import { View, Text, StyleSheet, Pressable, SafeAreaView, Alert,ActivityIndicator } from 'react-native';
+import {React,useState} from 'react';
 import { router } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { wp, hp } from '../../utils/responsive';
@@ -8,17 +8,14 @@ import { colors } from '../../styles/globalStyles';
 import FormField from '../../components/FormField';
 import CustomButton from '../../components/CustomButton';
 import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler';
-import { Formik } from 'formik';
+import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
-
+import { createUser } from '../../lib/appwriteConfig';
 const SignUp = ({ navigation }) => { 
   const SignInSchema = Yup.object().shape({
-    firstName: Yup.string()
+    username: Yup.string()
       .matches(/^[A-Za-z]+$/, 'First Name should contain only alphabetic characters')
       .required('First Name is required'),
-    lastName: Yup.string()
-      .matches(/^[A-Za-z]+$/, 'Last Name should contain only alphabetic characters')
-      .required('Last Name is required'),
     email: Yup.string().email('Invalid email').required('Email is required'),
     password: Yup.string()
       .min(8, 'Password must be at least 8 characters')
@@ -29,6 +26,45 @@ const SignUp = ({ navigation }) => {
       .oneOf([Yup.ref('password'), null], 'Passwords must match')
       .required('Confirm Password is required'),
   });
+  const  [isSubmitting,setIsSubmitting]=useState(false)
+
+  const handleSignUp = async (values) => {
+    // setIsSubmitting(true);
+
+    // try {
+    //   const newUser = await createrUser(
+    //     values.username,
+    //     values.email,
+    //     values.password,
+    //     values.confirmPassword 
+    //   );
+    //   console.log('User created:', newUser);
+
+    //   // Navigate to the next screen or perform other actions after successful sign-up
+    //    router.push('/sign-in'); 
+    // } catch (error) {
+    //   console.error('Signup error:', error);
+    //   // Display error message to the user (e.g., using an alert or a state variable)
+    //   Alert.alert('Sign up error ', error)
+    // } finally {
+    //   setIsSubmitting(false);
+    // // }
+    // if(!values.username || values.password || values.email){
+    //   Alert.alert('Error','Please fill all fields  ')
+    // }
+    setIsSubmitting(true)
+    try {
+      const result= await createUser(values.email,values.password,values.username)
+
+      // set it to global state
+      router.replace('/home')
+    } catch (error) {
+      Alert.alert('Error',error.message)
+    }finally{
+      setIsSubmitting(false)
+    }
+   
+  };
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
@@ -44,37 +80,23 @@ const SignUp = ({ navigation }) => {
             <Text style={styles.subtitle}>Sign up to read stories of Kweku Ananse</Text>
 
             <Formik
-              initialValues={{ firstName: '', lastName: '', email: '', password: '', confirmPassword: '' }}
+              initialValues={{ username:'', email: '', password: '', confirmPassword: '' }}
               validationSchema={SignInSchema}
-              onSubmit={(values) => {
-                // Handle sign in logic
-                console.log(values);
-              }}
+              onSubmit={handleSignUp}
             >
               {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
                 <>
-                  <View style={styles.formContainer}>
-                    {/* First Name */}
+                 
+                    {/* username */}
                     <FormField
-                      title='First Name'
-                      value={values.firstName}
-                      placeholder='First name'
-                      handleChangeText={handleChange('firstName')}
-                      onBlur={handleBlur('firstName')}
-                      error={touched.firstName && errors.firstName}
-                      otherStyles={{ marginTop: 10, width: '50%' }}
+                      title='UserName'
+                      value={values.username}
+                      placeholder='UserName'
+                      handleChangeText={handleChange('username')}
+                      onBlur={handleBlur('username')}
+                      error={touched.username && errors.username}
+                      otherStyles={{ marginTop: 10 }}
                     />
-                    {/* Last Name */}
-                    <FormField
-                      title='Last Name'
-                      value={values.lastName}
-                      placeholder='Last Name'
-                      handleChangeText={handleChange('lastName')}
-                      onBlur={handleBlur('lastName')}
-                      error={touched.lastName && errors.lastName}
-                      otherStyles={{ marginTop: 10, width: '50%' }}
-                    />
-                  </View>
                   {/* Email */}
                   <FormField
                     title='Email'
@@ -113,7 +135,15 @@ const SignUp = ({ navigation }) => {
                     title='Sign Up'
                     handlePress={handleSubmit}
                     containerStyles={{ marginTop: 35 }}
+                    isLoading={isSubmitting}
                   />
+                  {/* Loading Animation */}
+                  {isSubmitting && (
+                    <View style={styles.loadingContainer}>
+                      <ActivityIndicator size="large" color={colors.primary} /> 
+                      <Text style={styles.loadingText}>Signing up...</Text>
+                    </View>
+                  )}
                 </>
               )}
             </Formik>
@@ -123,7 +153,7 @@ const SignUp = ({ navigation }) => {
               <View style={styles.line} />
             </View>
 
-            <CustomButton
+            {/* <CustomButton
               title="Sign up with Google"
               handlePress={() => console.log('Google Sign In pressed')}
               containerStyles={{ width: "100%", marginTop: 10 }}
@@ -131,7 +161,7 @@ const SignUp = ({ navigation }) => {
               icon={icons.googleIcon}
               iconStyles={{ width: 25, height: 25 }}
               textStyles={{ color: colors.textWhite }}
-            />
+            /> */}
 
             <Pressable onPress={() => router.push('/sign-in')}>
               <Text style={styles.signUpText}>
@@ -171,11 +201,6 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     marginBottom: hp(2),
   },
-  formContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    gap: 10,
-  },
   orContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -203,6 +228,15 @@ const styles = StyleSheet.create({
   },
   scrollViewContent: {
     flexGrow: 1,
+  },
+  loadingContainer: {
+    marginTop: 20,
+    alignItems: 'center',
+  },
+  loadingText: {
+    marginTop: 10,
+    color: colors.textWhite, // Or any color you prefer
+    fontSize: wp(4),
   },
 });
 
