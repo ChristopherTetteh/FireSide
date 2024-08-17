@@ -37,7 +37,7 @@ const CustomButton = ({
       )}
       <Text style={{
         color: 'black',
-        fontWeight: '500',
+        fontFamily:'Poppins-Regular',
         fontSize: fontSizes.large,
         ...textStyles
       }}>

@@ -5,7 +5,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import {wp,hp} from '../utils/responsive'
 import { images } from '../constants'
 import CustomButton from '../components/CustomButton'
-import { colors,fontWeights,fontSizes } from '../styles/globalStyles'
+import { colors, } from '../styles/globalStyles'
 
 const App = () => {
   return (
@@ -46,7 +46,8 @@ const App = () => {
 
 const styles=StyleSheet.create({
   container:{
-    flex: 1
+    flex: 1,
+  
   },
   scrollContainer:{
     flex: 1,
@@ -71,23 +72,19 @@ const styles=StyleSheet.create({
     bottom:hp(8),
     alignItems: 'center',
   },
-  bottomContainer:{
-    position: 'absolute',
-    bottom:hp(8),
-    alignItems: 'center',
-  },
   title: {
-    fontSize: wp(8),
+    fontSize: wp(7.2),
     color: colors.secondary, 
-    fontWeight: 'bold',
     textAlign: 'center',
-    marginBottom: hp(2),
+    marginBottom: hp(1.5),
+    fontFamily:'Poppins-ExtraBold'
   },
   subtitle: {
     fontSize: wp(3.7),
     color: colors.secondary,
     textAlign: 'center',
-    marginBottom: hp(4),
+    marginBottom: hp(3),
+    fontFamily:'Poppins-Light'
   },
 })
 

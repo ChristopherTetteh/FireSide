@@ -1,6 +1,6 @@
-import { View, Text, StyleSheet, Pressable, SafeAreaView } from 'react-native';
-import React from 'react';
-import { router } from 'expo-router';
+import { View, Text, StyleSheet, Pressable, SafeAreaView,ActivityIndicator ,Alert} from 'react-native';
+import React,{useState} from 'react';
+import { router,Link } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { wp, hp } from '../../utils/responsive';
 import { icons } from '../../constants';
@@ -9,7 +9,9 @@ import FormField from '../../components/FormField';
 import CustomButton from '../../components/CustomButton';
 import { GestureHandlerRootView,ScrollView } from 'react-native-gesture-handler';
 import { Formik } from 'formik';
+import { signIn } from '../../lib/appwriteConfig';
 import * as Yup from 'yup';
+
 const SignIn = ({ navigation }) => {
   const SignInSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Email is required'),
@@ -19,7 +21,22 @@ const SignIn = ({ navigation }) => {
       .matches(/\d/, 'Password must contain at least one number')
       .required('Password is required'),
   });
+const  [isSubmitting,setIsSubmitting]=useState(false)
+const handleSignIn = async (values) => {
+  setIsSubmitting(true)
+  try {
+    const result= await signIn(values.email,values.password)
 
+    // set it to global state
+    router.replace('/home')
+  } catch (error) {
+    Alert.alert('Error',error.message)
+  }finally{
+    setIsSubmitting(false)
+  }
+ 
+
+};
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
     <SafeAreaView style={styles.body}>
@@ -31,10 +48,7 @@ const SignIn = ({ navigation }) => {
       <Formik
         initialValues={{ email: '', password: '' }}
         validationSchema={SignInSchema}
-        onSubmit={(values) => {
-          // Handle sign in logic
-          console.log(values);
-        }}
+        onSubmit={handleSignIn}
         >
         {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
           <>
@@ -62,14 +76,23 @@ const SignIn = ({ navigation }) => {
               title='Sign In'
               handlePress={handleSubmit}
               containerStyles={{ marginTop: 50 }}
+              isLoading={isSubmitting} 
               />
+              {/* Loading Animation */}
+          {isSubmitting && (
+            <View style={styles.loadingContainer}>
+              <ActivityIndicator size="large" color={colors.primary} /> 
+              <Text style={styles.loadingText}>Signing in...</Text>
+            </View>
+          )}
+
           </>
+          
         )}
       </Formik>
-
-      <Pressable onPress={() => router.push('forget-password')}>
-        <Text style={styles.forgotPassword}>Forgot password?</Text>
-      </Pressable>
+      <View>
+        <Link style={styles.forgotPassword} href='/forget-password'>Forgot Password</Link>
+      </View>
 
       <View style={styles.orContainer}>
         <View style={styles.line} />
@@ -77,7 +100,7 @@ const SignIn = ({ navigation }) => {
         <View style={styles.line} />
       </View>
 
-      <CustomButton
+      {/* <CustomButton
         title="Sign in with Google"
         handlePress={() => console.log('Google Sign In pressed')}
         containerStyles={{ width: "100%", marginTop: 10 }}
@@ -85,13 +108,15 @@ const SignIn = ({ navigation }) => {
         icon={icons.googleIcon}
         iconStyles={{ width: 25, height: 25 }}
         textStyles={{ color: colors.textWhite }}
-        />
-
-      <Pressable onPress={() => router.push('/onboardingScreen1')}>
-        <Text style={styles.signUpText}>
-          Don't have an account? <Text style={styles.signUpLink}>Sign Up</Text>
+        isLoading={isSubmitting}
+        /> */}
+{/* 
+      {/* Link to other pages */}
+      <View>
+        <Text style={styles.signUpText}>  Don't have an account?
+        <Link style={styles.signUpLink} href='/onboardingScreen1'>Sign Up</Link>
         </Text>
-      </Pressable>
+      </View>
         
         </View>
         </ScrollView>
@@ -111,21 +136,22 @@ const styles = StyleSheet.create({
     width: '100%',
     flex: 1,
     paddingHorizontal: wp(6),
-    paddingVertical: hp(10),
+    paddingVertical: hp(12),
     backgroundColor: colors.tertairy,
   },
   title: {
     fontSize: wp(7),
-    fontWeight: 'bold',
+    fontFamily:'Poppins-Bold',
     color: colors.textWhite,
     textAlign: 'left',
-    marginBottom: hp(3),
+    marginBottom: hp(1.5),
   },
   subtitle: {
-    fontSize: wp(3.2),
+    fontSize: wp(3.5),
     color: colors.textWhite,
+    fontFamily:'Poppins-Regular',
     textAlign: 'left',
-    marginBottom: hp(2),
+    marginBottom: hp(3),
   },
   orContainer: {
     flexDirection: 'row',
@@ -152,10 +178,20 @@ const styles = StyleSheet.create({
     color: '#777',
     fontSize: wp(4),
     textAlign: 'center',
-    paddingVertical: hp(8),
+    paddingVertical: hp(5),
   },
   signUpLink: {
     color: colors.primary,
+    
+  },
+  loadingContainer: {
+    marginTop: 20,
+    alignItems: 'center',
+  },
+  loadingText: {
+    marginTop: 10,
+    color: colors.primary, // Or any color you prefer
+    fontSize: wp(4),
   },
 });
 

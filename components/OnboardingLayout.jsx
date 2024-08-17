@@ -61,15 +61,15 @@ const styles = StyleSheet.create({
     bottom: hp(6),
   },
   title: {
-    fontSize: wp(8),
+    fontSize: wp(7),
     color: colors.secondary, // gold color
-    fontWeight: 'bold',
+    fontFamily:'Poppins-Bold',
     textAlign: 'center',
     marginBottom: hp(2),
   },
   subtitle: {
     fontSize: wp(4),
-    color: '#999',
+    color: colors.secondary,
     textAlign: 'center',
     marginBottom: hp(4),
   },

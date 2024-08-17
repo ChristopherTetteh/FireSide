@@ -37,12 +37,12 @@ const FormField = ({
           style={{
             flex: 1,
             color: colors.secondary,
-            fontWeight: 'normal',
+            fontFamily:'Poppins-Light',
             fontSize: fontSizes.large,
           }}
           value={value}
           placeholder={placeholder}
-          placeholderTextColor='#777'
+          placeholderTextColor='#555'
           onChangeText={handleChangeText}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
@@ -60,7 +60,7 @@ const FormField = ({
         )}
       </View>
       {error && (
-        <Text style={{ color: 'red', fontSize: fontSizes.small }}>{error}</Text>
+        <Text style={{ color: 'red', fontSize: fontSizes.small ,fontFamily:'Poppins-Light' }}>{error}</Text>
       )}
     </View>
   );
