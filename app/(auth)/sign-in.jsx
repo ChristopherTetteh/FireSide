@@ -9,7 +9,8 @@ import FormField from '../../components/FormField';
 import CustomButton from '../../components/CustomButton';
 import { GestureHandlerRootView,ScrollView } from 'react-native-gesture-handler';
 import { Formik } from 'formik';
-import { signIn } from '../../lib/appwriteConfig';
+import { getCurrentUser, signIn } from '../../lib/appwriteConfig';
+import { useGlobalContext } from '../../context/GlobalProvider';
 import * as Yup from 'yup';
 
 const SignIn = ({ navigation }) => {
@@ -21,21 +22,24 @@ const SignIn = ({ navigation }) => {
       .matches(/\d/, 'Password must contain at least one number')
       .required('Password is required'),
   });
-const  [isSubmitting,setIsSubmitting]=useState(false)
-const handleSignIn = async (values) => {
-  setIsSubmitting(true)
+  const { setUser, setIsLoggedIn } = useGlobalContext(); // Destructure setUser and setIsLoggedIn from the global context
+
+ const  [isSubmitting,setIsSubmitting]=useState(false)
+
+ const handleSignIn = async (values) => {
+  setIsSubmitting(true);
   try {
-    const result= await signIn(values.email,values.password)
-
-    // set it to global state
-    router.replace('/home')
+    await signIn(values.email, values.password);
+    const result = await getCurrentUser();
+    setUser(result);  // Use the setUser from the global context
+    setIsLoggedIn(true); // Use setIsLoggedIn from the global context
+    Alert.alert('Success', 'User signed in successfully');
+    router.replace('/home');
   } catch (error) {
-    Alert.alert('Error',error.message)
-  }finally{
-    setIsSubmitting(false)
+    Alert.alert('Error', error.message);
+  } finally {
+    setIsSubmitting(false);
   }
- 
-
 };
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>

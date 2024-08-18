@@ -1,13 +1,15 @@
 import { View, Text, SafeAreaView, ImageBackground, StyleSheet,StatusBar } from 'react-native'
 import React from 'react'
-import { router } from 'expo-router'
+import { Redirect, router } from 'expo-router'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import {wp,hp} from '../utils/responsive'
 import { images } from '../constants'
 import CustomButton from '../components/CustomButton'
 import { colors, } from '../styles/globalStyles'
-
+import { useGlobalContext } from '../context/GlobalProvider'
 const App = () => {
+const {isLoading,isLoggedIn}=useGlobalContext();
+if(!isLoading && isLoggedIn) return <Redirect href='/home'/>
   return (
     <GestureHandlerRootView style={styles.container}>
       <SafeAreaView style={styles.container}>
