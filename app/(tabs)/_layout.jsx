@@ -4,20 +4,16 @@ import { Tabs,Redirect } from 'expo-router'
 import { colors } from '../../styles/globalStyles'
 import { icons } from '../../constants'
 
-const focusedStyle = {
-  color: colors.textBalck,
-  fontSize: 12,
-} 
 const TabIcon=({color,icon,name,focused})=>{
   return(
-        <View>
+        <View style={{justifyContent:'center',alignItems:'center',gap:2}}>
             <Image
             source={icon}
             resizeMode="contain"
             tintColor={color}
-            style={{width:25,height:25}}
+            style={{width:24,height:24}}
             />
-           <Text style={focused ? focusedStyle : null}>{name}</Text>
+           <Text style={{color:color}}>{name}</Text>
         </View>
     )
 }
@@ -26,8 +22,17 @@ export default function TabsLayout() {
     <>
     <Tabs
      screenOptions={{
-      tabBarShowLabel: false, // Hide default labels if you're adding custom ones
-    }}
+      tabBarShowLabel: false,
+      tabBarActiveTintColor:'#ffa001',
+      tabBarInactiveTintColor:'#fff',
+      tabBarStyle:{
+        backgroundColor:'#161622',
+        borderTopWidth:2,
+        borderTopColor:colors.tertairy,
+        height:60,
+      }
+      
+         }}
     >
       {/* Home Icon */}
       <Tabs.Screen
