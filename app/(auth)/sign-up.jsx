@@ -11,6 +11,7 @@ import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import { createUser } from '../../lib/appwriteConfig';
+import { useGlobalContext } from '../../context/GlobalProvider';
 const SignUp = ({ navigation }) => { 
   const SignInSchema = Yup.object().shape({
     username: Yup.string()
@@ -27,41 +28,22 @@ const SignUp = ({ navigation }) => {
       .required('Confirm Password is required'),
   });
   const  [isSubmitting,setIsSubmitting]=useState(false)
+  const { setUser, setIsLoggedIn } = useGlobalContext(); // Destructure setUser and setIsLoggedIn from the global context
 
   const handleSignUp = async (values) => {
-    // setIsSubmitting(true);
-
-    // try {
-    //   const newUser = await createrUser(
-    //     values.username,
-    //     values.email,
-    //     values.password,
-    //     values.confirmPassword 
-    //   );
-    //   console.log('User created:', newUser);
-
-    //   // Navigate to the next screen or perform other actions after successful sign-up
-    //    router.push('/sign-in'); 
-    // } catch (error) {
-    //   console.error('Signup error:', error);
-    //   // Display error message to the user (e.g., using an alert or a state variable)
-    //   Alert.alert('Sign up error ', error)
-    // } finally {
-    //   setIsSubmitting(false);
-    // // }
-    // if(!values.username || values.password || values.email){
-    //   Alert.alert('Error','Please fill all fields  ')
-    // }
     setIsSubmitting(true)
+    
     try {
       const result= await createUser(values.email,values.password,values.username)
-
       // set it to global state
+      setUser(result)
+      setIsLoggedIn(true)
+      Alert.alert("Registration Sucessfully!!!!")
       router.replace('/home')
     } catch (error) {
       Alert.alert('Error',error.message)
     }finally{
-      setIsSubmitting(false)
+        setIsSubmitting(false)
     }
    
   };

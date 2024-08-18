@@ -34,7 +34,6 @@ const RootLayout = () => {
 
   return(
     <GlobalProvider>
-
       <Slot />
     </GlobalProvider>
   ) 
