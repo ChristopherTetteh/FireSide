@@ -3,6 +3,7 @@ import { View, ActivityIndicator, StyleSheet } from 'react-native';
 import { Slot } from 'expo-router';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
+import GlobalProvider from '../context/GlobalProvider';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -31,7 +32,12 @@ const RootLayout = () => {
     );
   }
 
-  return <Slot />;
+  return(
+    <GlobalProvider>
+
+      <Slot />
+    </GlobalProvider>
+  ) 
 };
 
 const styles = StyleSheet.create({

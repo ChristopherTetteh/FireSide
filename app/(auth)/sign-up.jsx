@@ -15,7 +15,7 @@ const SignUp = ({ navigation }) => {
   const SignInSchema = Yup.object().shape({
     username: Yup.string()
       .matches(/^[A-Za-z]+$/, 'First Name should contain only alphabetic characters')
-      .required('First Name is required'),
+      .required('Username is required'),
     email: Yup.string().email('Invalid email').required('Email is required'),
     password: Yup.string()
       .min(8, 'Password must be at least 8 characters')

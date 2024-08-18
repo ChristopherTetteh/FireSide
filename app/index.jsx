@@ -8,6 +8,7 @@ import CustomButton from '../components/CustomButton'
 import { colors, } from '../styles/globalStyles'
 
 const App = () => {
+  
   return (
     <GestureHandlerRootView style={styles.container}>
       <SafeAreaView style={styles.container}>
