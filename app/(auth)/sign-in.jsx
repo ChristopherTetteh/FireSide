@@ -97,12 +97,12 @@ const SignIn = ({ navigation }) => {
       <View>
         <Link style={styles.forgotPassword} href='/forget-password'>Forgot Password</Link>
       </View>
-
+{/* 
       <View style={styles.orContainer}>
         <View style={styles.line} />
         <Text style={styles.orText}>or</Text>
         <View style={styles.line} />
-      </View>
+      </View> */}
 
       {/* <CustomButton
         title="Sign in with Google"
@@ -133,14 +133,17 @@ const SignIn = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   body:{
-    flex:1,
-    width:'100%'
+    // flex:1,
+    width:'100%',
+    height:'100%'
+   
   },
   container: {
     width: '100%',
-    flex: 1,
+    height:'auto',
+    // flex: 1,
     paddingHorizontal: wp(6),
-    paddingVertical: hp(12),
+    paddingVertical: hp(15),
     backgroundColor: colors.tertairy,
   },
   title: {
