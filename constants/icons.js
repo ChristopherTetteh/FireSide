@@ -9,6 +9,7 @@ import bookmarkIcon from '../assets/images/bookmark.png'
 import playIcon from '../assets/images/PlayIcon.png'
 import starIcon from '../assets/images/starSingle.png'
 import googleIcon from '../assets/images/google.png'
+import logoutIcon from '../assets/images/logout.png'
 const icons = {
     eyeHide,
     eyeIcon,
@@ -17,6 +18,7 @@ const icons = {
     profileIcon,
     searchIcon,
     homeIcon,
+    logoutIcon,
     bookmarkIcon,
     playIcon,
     starIcon,
